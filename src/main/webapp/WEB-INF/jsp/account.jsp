@@ -15,6 +15,12 @@
 		value="${account.balanceAmount.valueWithFractionDigits}" 
 		currencySymbol="${account.balanceAmount.currency.symbol}"/>
 	</section>
+	
+	<nav>
+		<ul>
+			<li><a href="<c:url value="/"/>">Créer un nouveau compte</a></li>
+		</ul>
+	</nav>
 
 </body>
 </html>

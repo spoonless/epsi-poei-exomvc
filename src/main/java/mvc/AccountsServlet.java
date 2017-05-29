@@ -1,8 +1,6 @@
 package mvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,14 +21,12 @@ public class AccountsServlet extends HttpServlet {
 		long accountBalanceFraction = Long.valueOf(req.getParameter("accountBalanceFraction"));
 	
 		Amount amount = new Amount(accountBalanceInteger, accountBalanceFraction);
-		Account account = new Account(req.getParameter("accountName"), req.getParameter("accountNumber"), amount);
-
-		List<Account> accounts = new ArrayList<>();
-		accounts.add(account);
+		Account account = AccountManager.getSingleton().save(req.getParameter("accountName"), req.getParameter("accountNumber"), amount);
 		
 		req.setAttribute("account", account);
-	
+		
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/account.jsp").forward(req, resp);
 	}
+
 
 }
