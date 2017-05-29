@@ -17,15 +17,16 @@ public class AccountsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		
-		long accountBalanceInteger = Long.valueOf(req.getParameter("accountBalanceInteger"));
-		long accountBalanceFraction = Long.valueOf(req.getParameter("accountBalanceFraction"));
-	
-		Amount amount = new Amount(accountBalanceInteger, accountBalanceFraction);
-		Account account;
-		try {
-			account = AccountManager.getSingleton().save(req.getParameter("accountName"), req.getParameter("accountNumber"), amount);
+		try {			
+			long accountBalanceInteger = Long.valueOf(req.getParameter("accountBalanceInteger"));
+			long accountBalanceFraction = Long.valueOf(req.getParameter("accountBalanceFraction"));
+			Amount amount = new Amount(accountBalanceInteger, accountBalanceFraction);
+			Account account = AccountManager.getSingleton().save(req.getParameter("accountName"), req.getParameter("accountNumber"), amount);
 			req.setAttribute("account", account);
 			getServletContext().getRequestDispatcher("/WEB-INF/jsp/account.jsp").forward(req, resp);
+		} catch (NumberFormatException nfe) {
+			req.setAttribute("error", "Le montant du solde doit être un nombre!");
+			getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
 		} catch (AccountAlreadyExistingException e) {
 			req.setAttribute("error", "Le compte existe déjà");
 			getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
