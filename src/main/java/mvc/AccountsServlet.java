@@ -27,8 +27,7 @@ public class AccountsServlet extends HttpServlet {
 			long accountBalanceFraction = Long.valueOf(req.getParameter("accountBalanceFraction"));
 			Amount amount = new Amount(accountBalanceInteger, accountBalanceFraction);
 			Account account = AccountManager.getSingleton().save(req.getParameter("accountName"), req.getParameter("accountNumber"), amount);
-			req.setAttribute("account", account);
-			getServletContext().getRequestDispatcher("/WEB-INF/jsp/account.jsp").forward(req, resp);
+			resp.sendRedirect(req.getContextPath() + "/account?accountNumber=" + account.getNumber());
 		} catch (NumberFormatException nfe) {
 			req.setAttribute("error", "invalid.amount.format");
 			getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);

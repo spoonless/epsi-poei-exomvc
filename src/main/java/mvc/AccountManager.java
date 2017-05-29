@@ -22,8 +22,16 @@ public class AccountManager {
 		return newAccount;
 	}
 	
+	public Account getByNumber(String accountNumber) {
+		for (Account account : accounts) {
+			if (account.getNumber().equals(accountNumber)) {
+				return account;
+			}
+		}
+		return null;
+	}
+
 	public static AccountManager getSingleton() {
 		return singleton;
 	}
-
 }
