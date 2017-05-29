@@ -12,7 +12,8 @@
 	<section>
 		<c:out value="${account.name}"/>&nbsp;: 
 		<fmt:formatNumber type="currency" 
-		value="${account.balanceWithFractionDigits}" currencySymbol="${account.currency.symbol}"/>
+		value="${account.balanceAmount.valueWithFractionDigits}" 
+		currencySymbol="${account.balanceAmount.currency.symbol}"/>
 	</section>
 
 </body>
