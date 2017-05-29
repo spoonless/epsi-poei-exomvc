@@ -25,10 +25,10 @@ public class AccountsServlet extends HttpServlet {
 			req.setAttribute("account", account);
 			getServletContext().getRequestDispatcher("/WEB-INF/jsp/account.jsp").forward(req, resp);
 		} catch (NumberFormatException nfe) {
-			req.setAttribute("error", "Le montant du solde doit être un nombre!");
+			req.setAttribute("error", "invalid.amount.format");
 			getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
 		} catch (AccountAlreadyExistingException e) {
-			req.setAttribute("error", "Le compte existe déjà");
+			req.setAttribute("error", "account.already.exists");
 			getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
 		}
 	}

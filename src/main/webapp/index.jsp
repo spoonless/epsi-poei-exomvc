@@ -8,9 +8,15 @@
 </head>
 <body>
 
-<c:if test="${not empty error}">
-	<c:out value="${error}"></c:out>
-</c:if>
+<c:choose>
+	<c:when test="${error eq 'invalid.amount.format'}">
+		Le solde initial doit être un nombre&nbsp;!
+	</c:when>
+	<c:when test="${error eq 'account.already.exists'}">
+		Le compte existe déjà&nbsp;!
+	</c:when>
+</c:choose>
+
 <form action="<c:url value="/accounts"/>" method="POST">
 	<label>Nom du compte</label>
 	<input name="accountName" value="<c:out value="${param['accountName']}"/>"><br>
