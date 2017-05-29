@@ -8,13 +8,17 @@
 </head>
 <body>
 
+<c:if test="${not empty error}">
+	<c:out value="${error}"></c:out>
+</c:if>
 <form action="<c:url value="/accounts"/>" method="POST">
 	<label>Nom du compte</label>
-	<input name="accountName"><br>
+	<input name="accountName" value="<c:out value="${param['accountName']}"/>"><br>
 	<label>Numéro du compte</label>
-	<input name="accountNumber"><br>
+	<input name="accountNumber" value="<c:out value="${param['accountNumber']}"/>"><br>
 	<label>Solde initial</label>
-	<input name="accountBalanceInteger">,<input name="accountBalanceFraction" size="2" maxlength="2"><br>
+	<input name="accountBalanceInteger" value="<c:out value="${param['accountBalanceInteger']}"/>">,
+	<input name="accountBalanceFraction" size="2" maxlength="2" value="<c:out value="${param['accountBalanceFraction']}"/>"><br>
 	<button type="submit">Créer</button>
 </form>
 
