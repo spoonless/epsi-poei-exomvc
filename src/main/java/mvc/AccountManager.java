@@ -22,13 +22,13 @@ public class AccountManager {
 		return newAccount;
 	}
 	
-	public Account getByNumber(String accountNumber) {
+	public Account getByNumber(String accountNumber) throws AccountDoesNotExistException {
 		for (Account account : accounts) {
 			if (account.getNumber().equals(accountNumber)) {
 				return account;
 			}
 		}
-		return null;
+		throw new AccountDoesNotExistException();
 	}
 
 	public static AccountManager getSingleton() {

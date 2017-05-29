@@ -15,9 +15,15 @@ public class AccountServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Account account = AccountManager.getSingleton().getByNumber(req.getParameter("accountNumber"));
-		req.setAttribute("account", account);
-		req.getRequestDispatcher("/WEB-INF/jsp/account.jsp").forward(req, resp);
+		Account account;
+		try {
+			account = AccountManager.getSingleton().getByNumber(req.getParameter("accountNumber"));
+			req.setAttribute("account", account);
+			req.getRequestDispatcher("/WEB-INF/jsp/account.jsp").forward(req, resp);
+		} catch (AccountDoesNotExistException e) {
+			log("Account does not exist", e);
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}
 	}
 
 }
