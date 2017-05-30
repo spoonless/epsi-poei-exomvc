@@ -1,4 +1,4 @@
-package mvc;
+package mvc.web;
 
 import java.io.IOException;
 
@@ -7,6 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import mvc.model.Account;
+import mvc.model.AccountAlreadyExistingException;
+import mvc.model.AccountManager;
+import mvc.model.Amount;
 
 @WebServlet({"/accounts", "/index.html"})
 public class AccountsServlet extends HttpServlet {
