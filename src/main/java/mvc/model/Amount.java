@@ -7,6 +7,9 @@ public class Amount {
 	private long value;
 	
 	public Amount(long integerPart, long fractionPart) {
+		if (fractionPart < 10) {
+			fractionPart = fractionPart * 10;
+		}
 		this.value = (long) (integerPart * Math.pow(10, DEFAULT_CURRENCY.getDefaultFractionDigits()) + fractionPart);
 	}
 
