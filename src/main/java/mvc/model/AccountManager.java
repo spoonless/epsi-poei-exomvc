@@ -3,14 +3,16 @@ package mvc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.Lock;
+import javax.ejb.LockType;
+import javax.ejb.Singleton;
+
+@Singleton
 public class AccountManager {
+	private final List<Account> accounts = new ArrayList<>();
 	
-	private static final AccountManager singleton = new AccountManager();
-	private List<Account> accounts = new ArrayList<>();
-	
-	private AccountManager() {}
-	
-	public synchronized Account save(String accountName, String accountNumber, Amount amount) throws AccountAlreadyExistingException {
+	@Lock(LockType.WRITE)
+	public Account save(String accountName, String accountNumber, Amount amount) throws AccountAlreadyExistingException {
 		for (Account account : accounts) {
 			if (account.getNumber().equals(accountNumber)) {
 				throw new AccountAlreadyExistingException();
@@ -22,6 +24,7 @@ public class AccountManager {
 		return newAccount;
 	}
 	
+	@Lock(LockType.READ)
 	public Account getByNumber(String accountNumber) throws AccountDoesNotExistException {
 		for (Account account : accounts) {
 			if (account.getNumber().equals(accountNumber)) {
@@ -29,9 +32,5 @@ public class AccountManager {
 			}
 		}
 		throw new AccountDoesNotExistException();
-	}
-
-	public static AccountManager getSingleton() {
-		return singleton;
 	}
 }

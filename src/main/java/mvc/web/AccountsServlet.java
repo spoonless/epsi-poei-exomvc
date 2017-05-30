@@ -2,6 +2,7 @@ package mvc.web;
 
 import java.io.IOException;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,9 @@ public class AccountsServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@EJB
+	private AccountManager accountManager;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/createAccount.jsp").forward(req, resp);
@@ -31,7 +35,7 @@ public class AccountsServlet extends HttpServlet {
 			String accountBalanceInteger = req.getParameter("accountBalanceInteger");
 			String accountBalanceFraction = req.getParameter("accountBalanceFraction");
 			Amount amount = new Amount(accountBalanceInteger, accountBalanceFraction);
-			Account account = AccountManager.getSingleton().save(req.getParameter("accountName"), req.getParameter("accountNumber"), amount);
+			Account account = accountManager.save(req.getParameter("accountName"), req.getParameter("accountNumber"), amount);
 			resp.sendRedirect(req.getContextPath() + "/account?accountNumber=" + account.getNumber());
 		} catch (NumberFormatException nfe) {
 			req.setAttribute("error", "invalid.amount.format");
