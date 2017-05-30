@@ -28,8 +28,8 @@ public class AccountsServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		try {			
-			long accountBalanceInteger = Long.valueOf(req.getParameter("accountBalanceInteger"));
-			long accountBalanceFraction = Long.valueOf(req.getParameter("accountBalanceFraction"));
+			String accountBalanceInteger = req.getParameter("accountBalanceInteger");
+			String accountBalanceFraction = req.getParameter("accountBalanceFraction");
 			Amount amount = new Amount(accountBalanceInteger, accountBalanceFraction);
 			Account account = AccountManager.getSingleton().save(req.getParameter("accountName"), req.getParameter("accountNumber"), amount);
 			resp.sendRedirect(req.getContextPath() + "/account?accountNumber=" + account.getNumber());

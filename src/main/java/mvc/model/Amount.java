@@ -6,11 +6,13 @@ public class Amount {
 	private static final Currency DEFAULT_CURRENCY = Currency.getInstance("EUR");
 	private long value;
 	
-	public Amount(long integerPart, long fractionPart) {
-		if (fractionPart < 10) {
-			fractionPart = fractionPart * 10;
+	public Amount(String integerPart, String fractionPart) throws NumberFormatException {
+		long integerPartAsLong = Long.valueOf(integerPart);
+		long fractionPartAsLong = Long.valueOf(fractionPart);
+		if (fractionPart.length() < 2) {
+			fractionPartAsLong = fractionPartAsLong * 10;
 		}
-		this.value = (long) (integerPart * Math.pow(10, DEFAULT_CURRENCY.getDefaultFractionDigits()) + fractionPart);
+		this.value = (long) (integerPartAsLong * Math.pow(10, DEFAULT_CURRENCY.getDefaultFractionDigits()) + fractionPartAsLong);
 	}
 
 	public long getValue() {
