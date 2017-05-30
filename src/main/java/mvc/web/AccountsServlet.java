@@ -39,10 +39,11 @@ public class AccountsServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/account?accountNumber=" + account.getNumber());
 		} catch (NumberFormatException nfe) {
 			req.setAttribute("error", "invalid.amount.format");
-			getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+			getServletContext().getRequestDispatcher("/WEB-INF/jsp/createAccount.jsp").forward(req, resp);
 		} catch (AccountAlreadyExistingException e) {
+			log("le compte existe déjà", e);
 			req.setAttribute("error", "account.already.exists");
-			getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+			getServletContext().getRequestDispatcher("/WEB-INF/jsp/createAccount.jsp").forward(req, resp);
 		}
 	}
 

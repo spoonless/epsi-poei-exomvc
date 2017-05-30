@@ -2,6 +2,9 @@ package mvc.model;
 
 import java.util.Currency;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Amount {
 	private static final Currency DEFAULT_CURRENCY = Currency.getInstance("EUR");
 	private long value;

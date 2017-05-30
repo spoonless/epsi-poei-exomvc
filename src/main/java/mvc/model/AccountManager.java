@@ -1,36 +1,39 @@
 package mvc.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.ejb.Singleton;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 
 @Singleton
 public class AccountManager {
-	private final List<Account> accounts = new ArrayList<>();
+	
+	@PersistenceContext(unitName="accountPersistenceUnit")
+	private EntityManager entityManager;
 	
 	@Lock(LockType.WRITE)
 	public Account save(String accountName, String accountNumber, Amount amount) throws AccountAlreadyExistingException {
-		for (Account account : accounts) {
-			if (account.getNumber().equals(accountNumber)) {
-				throw new AccountAlreadyExistingException();
-			}
-		}
 		
-		Account newAccount = new Account(accountName, accountNumber, amount);
-		accounts.add(newAccount);
-		return newAccount;
+		try {
+			getByNumber(accountNumber);
+			throw new AccountAlreadyExistingException();
+		} catch (AccountDoesNotExistException e) {
+			Account newAccount = new Account(accountName, accountNumber, amount);
+			entityManager.persist(newAccount);
+			return newAccount;
+		}
 	}
 	
 	@Lock(LockType.READ)
 	public Account getByNumber(String accountNumber) throws AccountDoesNotExistException {
-		for (Account account : accounts) {
-			if (account.getNumber().equals(accountNumber)) {
-				return account;
-			}
+		try {
+			return entityManager.createQuery("select a from Account a where a.number = :number", Account.class)
+					.setParameter("number", accountNumber)
+					.getSingleResult();
+		} catch (NoResultException e) {
+			throw new AccountDoesNotExistException();
 		}
-		throw new AccountDoesNotExistException();
 	}
 }
