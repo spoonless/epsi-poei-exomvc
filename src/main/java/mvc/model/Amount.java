@@ -9,6 +9,9 @@ public class Amount {
 	private static final Currency DEFAULT_CURRENCY = Currency.getInstance("EUR");
 	private long value;
 	
+	public Amount() {
+	}
+
 	public Amount(String integerPart, String fractionPart) throws NumberFormatException {
 		long integerPartAsLong = Long.valueOf(integerPart);
 		long fractionPartAsLong = Long.valueOf(fractionPart);

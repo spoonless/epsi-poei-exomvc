@@ -17,6 +17,9 @@ public class Account {
 	@Embedded
 	private Amount balance;
 
+	public Account() {
+	}
+
 	public Account(String name, String number, Amount amount) {
 		this.name = name;
 		this.number = number;
