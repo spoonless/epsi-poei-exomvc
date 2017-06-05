@@ -1,14 +1,10 @@
 package mvc.model;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import javax.annotation.ManagedBean;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
 
 import org.junit.Test;
 
@@ -17,12 +13,6 @@ public class AccountManagerTest extends EjbContainerTest {
 
 	@EJB
 	private AccountManager accountManager;
-	
-	@Resource
-	private UserTransaction tx;
-	
-	@PersistenceContext(unitName="accountPersistenceUnit")
-	private EntityManager em;
 	
 	@Test
 	public void persistAccount() throws Exception {
