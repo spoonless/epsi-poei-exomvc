@@ -7,7 +7,7 @@
 <title>Création d'un compte</title>
 </head>
 <body>
-
+${pageContext.request.userPrincipal.name}
 <c:choose>
 	<c:when test="${error eq 'invalid.amount.format'}">
 		Le solde initial doit être un nombre&nbsp;!

@@ -4,4 +4,30 @@
 		<error-code>404</error-code>
 		<location>/WEB-INF/jsp/404.jsp</location>
 	</error-page>
+	
+	<security-role>
+		<role-name>owner</role-name>
+	</security-role>
+
+	<security-constraint>
+		<display-name>site securisé</display-name>
+		<web-resource-collection>
+			<web-resource-name>sécurisé</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>owner</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login.jsp</form-login-page>
+			<form-error-page>/login_error.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
 </web-app>
