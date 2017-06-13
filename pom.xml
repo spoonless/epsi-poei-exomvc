@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.epsi</groupId>
-	<!-- artifactId correspond au nom de votre application, n'hésitez pas à 
+	<!-- artifactId correspond au nom de votre application, n'hésitez pas à
 		changer la valeur par défaut -->
 	<artifactId>mvc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -32,7 +32,7 @@
 			<groupId>org.apache.tomee</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>7.0-1</version>
-			<!-- le scope provided indique que cette dépendance sera fournie pour 
+			<!-- le scope provided indique que cette dépendance sera fournie pour
 				le serveur à l'exécution -->
 			<scope>provided</scope>
 		</dependency>
@@ -40,7 +40,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
-			<!-- le scope provided indique que cette dépendance sera fournie pour 
+			<!-- le scope provided indique que cette dépendance sera fournie pour
 				le serveur à l'exécution -->
 			<scope>provided</scope>
 		</dependency>
@@ -48,7 +48,7 @@
 			<groupId>org.apache.myfaces.core</groupId>
 			<artifactId>myfaces-api</artifactId>
 			<version>2.2.11</version>
-			<!-- le scope provided indique que cette dépendance sera fournie pour 
+			<!-- le scope provided indique que cette dépendance sera fournie pour
 				le serveur à l'exécution -->
 			<scope>provided</scope>
 		</dependency>
@@ -77,7 +77,7 @@
 	<build>
 		<plugins>
 			<plugin>
-				<!-- le plugin pour démarrer TomEE depuis la ligne de commande avec maven 
+				<!-- le plugin pour démarrer TomEE depuis la ligne de commande avec maven
 					: mvn package tomee:run -->
 				<groupId>org.apache.tomee.maven</groupId>
 				<artifactId>tomee-maven-plugin</artifactId>
@@ -86,6 +86,29 @@
 					<tomeeVersion>7.0.2</tomeeVersion>
 					<tomeeClassifier>plus</tomeeClassifier>
 				</configuration>
+			</plugin>
+
+			<plugin>
+					<groupId>org.codehaus.cargo</groupId>
+					<artifactId>cargo-maven2-plugin</artifactId>
+					<version>1.6.3</version>
+					<configuration>
+					  <!-- Container configuration -->
+					  <container>
+					    <containerId>tomee7x</containerId>
+					    <type>remote</type>
+					  </container>
+					  <!-- Configuration to use with the container (which will also configure the deployer) -->
+					  <configuration>
+					    <type>runtime</type>
+					    <properties>
+								<cargo.hostname>10.39.43.82</cargo.hostname>
+								<cargo.servlet.port>8080</cargo.servlet.port>
+					      <cargo.remote.username>david</cargo.remote.username>
+					      <cargo.remote.password>david</cargo.remote.password>
+					    </properties>
+					  </configuration>
+					</configuration>
 			</plugin>
 		</plugins>
 	</build>
